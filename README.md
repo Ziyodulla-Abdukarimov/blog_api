@@ -23,3 +23,6 @@ Once `pip` has finished downloading the dependencies:
 And navigate to `http://127.0.0.1:8000/swagger/`.
 
 ![alt text](https://github.com/Ziyodulla-Abdukarimov/blog_api/blob/master/readme_files/swagger.png?raw=true)
+
+
+<a href="https://www.buymeacoffee.com/Ziyodulladb" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
