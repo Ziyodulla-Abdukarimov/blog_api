@@ -22,4 +22,4 @@ Once `pip` has finished downloading the dependencies:
 ```
 And navigate to `http://127.0.0.1:8000/swagger/`.
 
-![alt text](https://github.com/Ziyodulla-Abdukarimov/blog_api/blob/master/readme_files/swagger.png?raw=true))
+![alt text](https://github.com/Ziyodulla-Abdukarimov/blog_api/blob/master/readme_files/swagger.png?raw=true)
