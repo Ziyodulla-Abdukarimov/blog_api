@@ -1,5 +1,7 @@
 ## Blog Api sample application
 
+#### - Email authentication
+#### - Phone authentication
 ### Setup
 The first thing to do is to clone the repository:
 ```sh
