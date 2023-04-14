@@ -4,9 +4,10 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.exceptions import ValidationError
 from datetime import datetime
 from rest_framework.response import Response
+from shared.utility import send_email, send_phone_notification
 
 from .serializers import SignUpSerializer
-from .models import User, CODE_VERIFIED, INFORMATION_FILLED, DONE
+from .models import User, CODE_VERIFIED, INFORMATION_FILLED, DONE, VIA_EMAIL, VIA_PHONE
 
 
 class CreateUserView(CreateAPIView):
@@ -43,3 +44,34 @@ class VerifyApiView(APIView):
             user.auth_status = CODE_VERIFIED
             user.save()
         return True
+
+
+class GetNewVerification(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        user = self.request.user
+        self.check_verification(user)
+        if user.auth_type == VIA_EMAIL:
+            code = user.create_verify_code(VIA_EMAIL)
+            send_email(user.email, code)
+        elif user.auth_type == VIA_PHONE:
+            code = user.create_verify_code(VIA_PHONE)
+            send_phone_notification(user.phone_number, code)
+        else:
+            data = {
+                "message": "You need to enter email or phone_number"
+            }
+            raise ValidationError(data)
+        return Response({
+            "success": True
+        })
+
+    @staticmethod
+    def check_verification(user):
+        verifies = user.verify_codes.filter(expiration_time__gte=datetime.now(), is_confirmed=False)
+        if verifies.exists():
+            data = {
+                'messages': "You need to wait over expiration time"
+            }
+            raise ValidationError(data)
